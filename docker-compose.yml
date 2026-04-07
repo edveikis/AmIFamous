@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    container_name: amifamous-app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: amifamous-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: amifamous
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
