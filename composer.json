@@ -1,0 +1,16 @@
+{
+  "name": "0xedvinas/amifamous",
+  "description": "Security breach checker",
+  "authors": [
+    {
+      "name": "Edvinas",
+      "email": "edvinasbureika@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
