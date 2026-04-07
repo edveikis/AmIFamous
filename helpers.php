@@ -1,6 +1,5 @@
 <?php
 
-
 /** 
  * Get the base path
  * 
@@ -11,4 +10,16 @@
 function basePath($path = '')
 {
     return __DIR__ . '/' . $path;
+}
+
+/**
+ * Loads a view onto the page
+ * 
+ * @param string $view
+ * 
+ * @return void
+ */
+function loadView($view)
+{
+    require basePath('app/views/' . $view . '.view.php');
 }
