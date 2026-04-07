@@ -12,4 +12,9 @@ class Router
             'controller' => $controller
         ];
     }
+
+    public function get($uri, $controller)
+    {
+        $this->registerRoute('GET', $uri, $controller);
+    }
 }
