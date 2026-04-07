@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class Router
 {
     protected $routes = [];
@@ -9,7 +11,8 @@ class Router
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
-            'controller' => $controller
+            'controller' => $controller,
+            'controllerMethod' => 'tmp'
         ];
     }
 
@@ -31,5 +34,22 @@ class Router
     public function delete($uri, $controller)
     {
         $this->registerRoute('DELETE', $uri, $controller);
+    }
+
+    public function route($uri)
+    {
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        foreach ($this->routes as $route) {
+            if ($route['method'] == $requestMethod && $route['uri'] == $uri) {
+                $controller = 'App\\Controllers\\' . $route['controller'];
+                $controllerMethod = $route['controllerMethod'];
+
+                $controllerInstance = new $controller();
+                $controllerInstance->$controllerMethod();
+
+                return;
+            }
+        }
     }
 }
