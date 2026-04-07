@@ -1,3 +1,5 @@
 <?php
 
-require '../app/views/home.view.php';
+require '../helpers.php';
+
+loadView('home');
