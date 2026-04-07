@@ -1,5 +1,13 @@
 <?php
-
+require __DIR__ . '/../vendor/autoload.php';
 require '../helpers.php';
 
-loadView('home');
+use Framework\Router;
+
+$uri = $_SERVER['REQUEST_URI'];
+
+$router = new Router();
+
+require basePath('routes.php');
+
+$router->route($uri);
