@@ -23,3 +23,37 @@ function loadView($view)
 {
     require basePath('app/views/' . $view . '.view.php');
 }
+
+/**
+ * Inspect array of data
+ * 
+ * @param array $data
+ * 
+ * @return void
+ */
+function inspect($data)
+{
+    echo '<pre>';
+
+    var_dump($data);
+
+    echo '</pre>';
+}
+
+/**
+ * Inspect array of data
+ * 
+ * @param array $data
+ * 
+ * @return void
+ */
+function inspectAndDie($data)
+{
+    echo '<pre>';
+
+    var_dump($data);
+
+    echo '</pre>';
+
+    die();
+}
