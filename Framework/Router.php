@@ -25,6 +25,6 @@ class Router
 
     public function put($uri, $controller)
     {
-        $this->registerRoute('POST', $uri, $controller);
+        $this->registerRoute('PUT', $uri, $controller);
     }
 }
