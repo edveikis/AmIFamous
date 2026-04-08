@@ -95,9 +95,9 @@
     <div class="container">
         <h1>Am I Famous?</h1>
         <p>Check if your email address is in a data breach</p>
-        <form>
-            <input type="email" placeholder="Enter your email address" required />
-            <button type="submit">Check</button>
+        <form method="POST" action="/breaches">
+            <input name="email" type="email" placeholder="Enter your email address" required />
+            <button>Check</button>
         </form>
     </div>
 </body>
