@@ -16,12 +16,20 @@ function basePath($path = '')
  * Loads a view onto the page
  * 
  * @param string $view
+ * @param array $data
  * 
  * @return void
  */
-function loadView($view)
+function loadView($view, $data = [])
 {
-    require basePath('App/views/' . $view . '.view.php');
+    $path = 'App/views/' . $view . '.view.php';
+
+    if (file_exists($path)) {
+        extract($data);
+        require basePath('App/views/' . $view . '.view.php');
+    } else {
+        echo 'Partial not found: ' . $path;
+    }
 }
 
 /**
