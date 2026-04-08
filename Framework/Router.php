@@ -8,11 +8,16 @@ class Router
 
     public function registerRoute($method, $uri, $controller)
     {
+        $controllerDetails = explode('@', $controller);
+
+        $controller = $controllerDetails[0];
+        $controllerMethod = $controllerDetails[1];
+
         $this->routes[] = [
             'method' => $method,
             'uri' => $uri,
             'controller' => $controller,
-            'controllerMethod' => 'tmp'
+            'controllerMethod' => $controllerMethod
         ];
     }
 
