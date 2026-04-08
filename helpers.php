@@ -22,7 +22,7 @@ function basePath($path = '')
  */
 function loadView($view, $data = [])
 {
-    $path = 'App/views/' . $view . '.view.php';
+    $path = basePath('App/views/' . $view . '.view.php');
 
     if (file_exists($path)) {
         extract($data);
