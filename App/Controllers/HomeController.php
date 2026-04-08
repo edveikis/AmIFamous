@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 class HomeController
 {
-    public function tmp()
+    public function index()
     {
-        echo 'hii';
+        loadView('home');
     }
 }

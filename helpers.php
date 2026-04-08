@@ -21,7 +21,7 @@ function basePath($path = '')
  */
 function loadView($view)
 {
-    require basePath('app/views/' . $view . '.view.php');
+    require basePath('App/views/' . $view . '.view.php');
 }
 
 /**
