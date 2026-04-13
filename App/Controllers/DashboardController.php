@@ -43,6 +43,7 @@ class DashboardController
     public function add()
 
     {
+        // TODO: sanitize user data
         inspectAndDie($_POST);
     }
 }
