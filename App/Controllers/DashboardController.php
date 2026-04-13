@@ -43,7 +43,6 @@ class DashboardController
     public function add()
 
     {
-
         inspectAndDie($_POST);
     }
 }
