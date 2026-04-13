@@ -39,4 +39,11 @@ class DashboardController
 
         loadView('dashboard/show', ['file_name' => $filename]);
     }
+
+    public function add()
+
+    {
+
+        inspectAndDie($_POST);
+    }
 }

@@ -198,7 +198,8 @@
                 <div class="value"><?= $file_name ?></div>
             </div>
 
-            <form action="" method="POST">
+            <form action="/dashboard/import" method="POST">
+                <input type="hidden" name="file" value="<?= $file_name ?>">
                 <div class="section">
                     <h2>Field Mapping</h2>
                     <div class="field-group">
@@ -244,14 +245,14 @@
                                 type="text"
                                 id="breach_name"
                                 name="breach_name"
-                                placeholder="example: LinkedIn 2012"
+                                placeholder="example: Citybee"
                                 required />
                         </div>
                     </div>
                 </div>
 
                 <div class="actions">
-                    <a href="#" class="btn btn-secondary">Cancel</a>
+                    <a href="/dashboard/" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-primary">Start Import</button>
                 </div>
             </form>
