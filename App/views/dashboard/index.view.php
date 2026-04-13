@@ -374,11 +374,7 @@
                             </div>
 
                             <div class="db-actions">
-                                <!-- <a href="#" class="action-link import">Import</a> -->
-                                <form method="POST" action="/dashboard/import">
-                                    <input type="hidden" name="file" value="<?= htmlspecialchars($file) ?>">
-                                    <button class="action-link import">Import</button>
-                                </form>
+                                <a href="/dashboard/import/<?= $file ?>" class="action-link import">Import</a>
                             </div>
                         </div>
                     <?php endforeach ?>

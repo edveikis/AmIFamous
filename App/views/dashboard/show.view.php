@@ -195,7 +195,7 @@
         <div class="card">
             <div class="file-box">
                 <div class="label">Selected file</div>
-                <div class="value">linkedin_2012_dump.csv</div>
+                <div class="value"><?= $file_name ?></div>
             </div>
 
             <form action="" method="POST">

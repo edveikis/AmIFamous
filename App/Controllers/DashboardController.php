@@ -32,10 +32,11 @@ class DashboardController
         );
     }
 
-    public function import()
+    public function import($params)
     {
         $importsPath = basePath('storage/breaches/imports/');
+        $filename = $params['file'] ?? null;
 
-        inspectAndDie($_GET);
+        loadView('dashboard/show', ['file_name' => $filename]);
     }
 }
