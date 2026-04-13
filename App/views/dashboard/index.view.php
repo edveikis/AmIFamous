@@ -188,6 +188,12 @@
             transition: 0.2s ease;
         }
 
+        .db-card-inline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         .db-card:hover {
             border-color: rgba(59, 130, 246, 0.35);
             transform: translateY(-2px);
@@ -240,8 +246,6 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 14px;
-            justify-content: right;
         }
 
         .action-link {
@@ -326,26 +330,26 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="label">Pending Datasets</div>
-                <div class="value">3</div>
-                <div class="sub">Waiting in storage/imports</div>
+                <div class="value"><?= count($import_files) ?></div>
+                <div class="sub">Waiting to be imported</div>
             </div>
 
             <div class="stat-card">
                 <div class="label">Imported Breaches</div>
-                <div class="value">12</div>
+                <div class="value"><?= $imported_db_count ?></div>
                 <div class="sub">Available for user searches</div>
             </div>
 
             <div class="stat-card">
                 <div class="label">Total Records</div>
-                <div class="value">48.2M</div>
+                <div class="value"><?= $imported_records_count ?></div>
                 <div class="sub">Indexed across all datasets</div>
             </div>
 
             <div class="stat-card">
-                <div class="label">Last Import</div>
-                <div class="value">2h ago</div>
-                <div class="sub">Collection 2026-04-13</div>
+                <div class="label">Last import</div>
+                <div class="value"></div>
+                <div class="sub"></div>
             </div>
         </div>
 
@@ -359,48 +363,25 @@
                             processed.
                         </p>
                     </div>
-                    <span class="badge badge-warning">3</span>
+                    <span class="badge badge-warning"><?= count($import_files) ?></span>
                 </div>
 
                 <div class="db-list">
-                    <div class="db-card">
-                        <div class="db-top">
+                    <?php foreach ($import_files as $file) : ?>
+                        <div class="db-card db-card-inline">
                             <div>
-                                <div class="db-name">linkedin_2012_dump.csv</div>
+                                <div class="db-name"><?= $file ?></div>
                             </div>
-                            <span class="status status-pending">Pending</span>
-                        </div>
 
-                        <div class="db-actions">
-                            <a href="#" class="action-link import">Import</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="panel">
-                <div class="panel-header">
-                    <div>
-                        <h2>Imported Databases</h2>
-                        <p>Already processed and indexed for breach lookups.</p>
-                    </div>
-                    <span class="badge badge-success">12</span>
-                </div>
-
-                <div class="db-list">
-                    <div class="db-card">
-                        <div class="db-top">
-                            <div>
-                                <div class="db-name">adobe_2013</div>
-                                <div class="db-meta">
-                                    Imported: Apr 12, 2026 · 11:20<br />
-                                    Records: 152,400,000<br />
-                                    Source file: adobe_2013.csv
-                                </div>
+                            <div class="db-actions">
+                                <!-- <a href="#" class="action-link import">Import</a> -->
+                                <form method="POST" action="/dashboard/import">
+                                    <input type="hidden" name="file" value="<?= htmlspecialchars($file) ?>">
+                                    <button class="action-link import">Import</button>
+                                </form>
                             </div>
-                            <span class="status status-imported">Imported</span>
                         </div>
-                    </div>
+                    <?php endforeach ?>
                 </div>
             </section>
         </div>
