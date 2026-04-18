@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Error;
 use Framework\Database;
+use Framework\Import\CSVImporter;
 
 class DashboardController
 {
@@ -33,33 +34,76 @@ class DashboardController
         );
     }
 
-    public function import($params)
+    public function importForm($params)
     {
         $importsPath = basePath('storage/breaches/imports/');
-        $filename = isset($params['file']) ? $params['file'] : null;
+        $fileName = isset($params['file']) ? $params['file'] : null;
 
-        if (!$filename) {
+        if (!$fileName) {
             return ErrorController::notFound('Filename is missing');
         }
 
         // Strip any directory components entirely
-        $filename = basename($filename);
+        $fileName = basename($fileName);
 
         // Resolve the real path and confirm it stays inside importsPath
-        $fullPath = realpath($importsPath . $filename);
+        $fullPath = realpath($importsPath . $fileName);
         $allowedBase = realpath($importsPath);
 
         if (!$fullPath || !str_starts_with($fullPath, $allowedBase)) {
             return ErrorController::notFound('File not found');
         }
 
-        loadView('dashboard/show', ['file_name' => $filename]);
+        loadView('dashboard/show', ['file_name' => $fileName]);
     }
 
     public function add()
     {
+        $importsPath = basePath('storage/breaches/imports/');
+        $fileName = isset($_POST['file']) ? $_POST['file'] : null;
+        $email = isset($_POST['email_field']) ? $_POST['email_field'] : null;
+        $password = isset($_POST['password_field']) ? $_POST['password_field'] : null;
+        $username = isset($_POST['username_field']) ? $_POST['username_field'] : null;
+        $breachName = isset($_POST['breach_name']) ? $_POST['breach_name'] : null;
 
-        // TODO: sanitize user data
-        inspectAndDie($_POST);
+        if (!$fileName) {
+            return ErrorController::notFound('Filename is missing');
+        }
+
+        // Strip any directory components entirely
+        $fileName = basename($fileName);
+
+        // Resolve the real path and confirm it stays inside importsPath
+        $fullPath = realpath($importsPath . $fileName);
+        $allowedBase = realpath($importsPath);
+
+        if (!$fullPath || !str_starts_with($fullPath, $allowedBase)) {
+            return ErrorController::notFound('File not found');
+        }
+
+        // email and breachName are required for the webapp to work
+        if (!$email) {
+            echo 'Email field is required';
+            // redirect
+            exit;
+        }
+
+        if (!$breachName) {
+            echo 'Breach name is requied';
+            // redirect
+            exit;
+        }
+
+        $importer = new CSVImporter();
+        $importer->import(
+            $fullPath,
+            [
+                'email' => $email,
+                'password' => $password,
+                'username' => $username,
+                'name' => $breachName,
+                'file_name' => $fileName,
+            ]
+        );
     }
 }
