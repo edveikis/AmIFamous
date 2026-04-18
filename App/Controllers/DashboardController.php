@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Error;
 use Framework\Database;
 
 class DashboardController
@@ -35,14 +36,22 @@ class DashboardController
     public function import($params)
     {
         $importsPath = basePath('storage/breaches/imports/');
-        $filename = $params['file'] ?? null;
+        $filename = isset($params['file']) ? urldecode($params['file']) : null;
 
-        loadView('dashboard/show', ['file_name' => $filename]);
+        if (!$filename) {
+            return ErrorController::notFound('Filename is missing');
+        }
+
+        if (file_exists($importsPath . $filename)) {
+            loadView('dashboard/show', ['file_name' => $filename]);
+        } else {
+            ErrorController::notFound('Filt not found or filename is null');
+        }
     }
 
     public function add()
-
     {
+
         // TODO: sanitize user data
         inspectAndDie($_POST);
     }
