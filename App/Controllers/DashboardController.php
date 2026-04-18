@@ -36,17 +36,24 @@ class DashboardController
     public function import($params)
     {
         $importsPath = basePath('storage/breaches/imports/');
-        $filename = isset($params['file']) ? urldecode($params['file']) : null;
+        $filename = isset($params['file']) ? $params['file'] : null;
 
         if (!$filename) {
             return ErrorController::notFound('Filename is missing');
         }
 
-        if (file_exists($importsPath . $filename)) {
-            loadView('dashboard/show', ['file_name' => $filename]);
-        } else {
-            ErrorController::notFound('Filt not found or filename is null');
+        // Strip any directory components entirely
+        $filename = basename($filename);
+
+        // Resolve the real path and confirm it stays inside importsPath
+        $fullPath = realpath($importsPath . $filename);
+        $allowedBase = realpath($importsPath);
+
+        if (!$fullPath || !str_starts_with($fullPath, $allowedBase)) {
+            return ErrorController::notFound('File not found');
         }
+
+        loadView('dashboard/show', ['file_name' => $filename]);
     }
 
     public function add()
