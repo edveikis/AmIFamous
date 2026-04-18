@@ -195,11 +195,11 @@
         <div class="card">
             <div class="file-box">
                 <div class="label">Selected file</div>
-                <div class="value"><?= $file_name ?></div>
+                <div class="value"><?= htmlspecialchars($file_name) ?></div>
             </div>
 
             <form action="/dashboard/import" method="POST">
-                <input type="hidden" name="file" value="<?= $file_name ?>">
+                <input type="hidden" name="file" value="<?= htmlspecialchars($file_name, ENT_QUOTES) ?>">
                 <div class="section">
                     <h2>Field Mapping</h2>
                     <div class="field-group">

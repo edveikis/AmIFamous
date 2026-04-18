@@ -374,7 +374,7 @@
                             </div>
 
                             <div class="db-actions">
-                                <a href="/dashboard/import/<?= $file ?>" class="action-link import">Import</a>
+                                <a href="/dashboard/import/<?= urlencode($file) ?>" class="action-link import">Import</a>
                             </div>
                         </div>
                     <?php endforeach ?>
