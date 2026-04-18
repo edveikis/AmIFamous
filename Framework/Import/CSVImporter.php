@@ -8,10 +8,9 @@ class CSVImporter
 {
     protected $db;
 
-    public function __construct()
+    public function __construct($database)
     {
-        $config = require basePath('config/db.php');
-        $this->db = new Database($config);
+        $this->db = $database;
     }
 
     public function import($fullPath, $fields)

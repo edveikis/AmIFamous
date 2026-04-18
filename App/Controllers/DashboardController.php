@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Error;
 use Framework\Database;
-use Framework\Import\CSVImporter;
+use Framework\Import\ImportDispatcher;
 
 class DashboardController
 {
@@ -59,6 +59,9 @@ class DashboardController
 
     public function add()
     {
+        // No execution time limit for request. Runs as long as it needs to
+        set_time_limit(0);
+
         $importsPath = basePath('storage/breaches/imports/');
         $fileName = isset($_POST['file']) ? $_POST['file'] : null;
         $email = isset($_POST['email_field']) ? $_POST['email_field'] : null;
@@ -94,7 +97,10 @@ class DashboardController
             exit;
         }
 
-        $importer = new CSVImporter();
+
+        // TODO: logic if there is no input in certain fields
+        // TODO: batch insert for faster inserts
+        $importer = new ImportDispatcher($this->db);
         $importer->import(
             $fullPath,
             [
@@ -105,5 +111,7 @@ class DashboardController
                 'file_name' => $fileName,
             ]
         );
+
+        redirect('/dashboard');
     }
 }
