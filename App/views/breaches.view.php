@@ -206,21 +206,6 @@
             white-space: nowrap;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 10px 0 4px;
-        }
-
-        .empty-state h2 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: #94a3b8;
-            line-height: 1.6;
-        }
-
         @media (max-width: 640px) {
             body {
                 padding: 24px 16px;
