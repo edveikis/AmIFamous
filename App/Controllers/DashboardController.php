@@ -23,13 +23,15 @@ class DashboardController
 
         $importedDatabasesCount = $this->db->query('SELECT COUNT(*) AS total FROM breaches')->fetchColumn();
         $importedRecordsCount = $this->db->query('SELECT COUNT(*) AS total FROM breach_records')->fetchColumn();
+        $lastImportDate = $this->db->query('SELECT MAX(created_at) AS last_import FROM breaches')->fetchColumn();
 
         loadView(
             'dashboard/index',
             [
                 'import_files' => $importFiles,
                 'imported_db_count' => $importedDatabasesCount,
-                'imported_records_count' => $importedRecordsCount
+                'imported_records_count' => $importedRecordsCount,
+                'imported_last_date' => $lastImportDate
             ]
         );
     }

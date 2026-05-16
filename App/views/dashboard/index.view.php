@@ -348,8 +348,8 @@
 
             <div class="stat-card">
                 <div class="label">Last import</div>
-                <div class="value"></div>
-                <div class="sub"></div>
+                <div class="value"><?= $imported_last_date ? date('M j', strtotime($imported_last_date)) : '—' ?></div>
+                <div class="sub"><?= $imported_last_date ? date('Y', strtotime($imported_last_date)) : 'No imports yet' ?></div>
             </div>
         </div>
 

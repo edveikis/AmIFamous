@@ -144,7 +144,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="/admin/login" method="POST">
+        <form action="/login" method="POST">
             <div class="field">
                 <label for="email">Email</label>
                 <input
