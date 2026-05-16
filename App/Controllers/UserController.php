@@ -21,6 +21,17 @@ class UserController
         return loadView('login');
     }
 
+    public function logout()
+    {
+        Session::clearAll();
+
+        $params = session_get_cookie_params();
+
+        setcookie('PHPSESSID', '', time() - 86400, $params['path'], $params['domain']);
+
+        redirect('/');
+    }
+
     public function authenticate()
     {
         $email = $_POST['email'] ?? '';
