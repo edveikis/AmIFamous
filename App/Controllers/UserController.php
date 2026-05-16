@@ -18,6 +18,6 @@ class UserController
 
     public function login()
     {
-        return loadView('users/login');
+        return loadView('login');
     }
 }
