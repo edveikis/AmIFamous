@@ -109,12 +109,40 @@
             font-size: 0.85rem;
             text-align: center;
         }
+
+        .error-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .error {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            font-size: 0.9rem;
+            text-align: left;
+            backdrop-filter: blur(6px);
+        }
     </style>
 </head>
 
 <body>
     <div class="login-card">
         <h1>Login</h1>
+
+        <?php if (isset($errors) && !empty($errors)) : ?>
+            <div class="error-list">
+                <?php foreach ($errors as $error) : ?>
+                    <div class="error">
+                        ⚠ <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <form action="/admin/login" method="POST">
             <div class="field">

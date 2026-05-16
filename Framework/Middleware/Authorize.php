@@ -28,7 +28,7 @@ class Authorize
         if ($role == 'guest' && $this->isAuthenticated()) {
             redirect('/');
         } else if ($role == 'auth' && !$this->isAuthenticated()) {
-            redirect('/auth/login');
+            redirect('/');
         }
     }
 }

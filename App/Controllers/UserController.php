@@ -62,16 +62,16 @@ class UserController
             exit;
         }
 
-        if (!password_verify($password, $user->password)) {
+        if (!password_verify($password, $user['password'])) {
             $errors['email'] = 'Incorrect credentials';
             loadView('login', ['errors' => $errors]);
             exit;
         }
 
         Session::set('user', [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
+            'id' => $user['id'],
+            'name' => $user['name'],
+            'email' => $user['email'],
         ]);
 
         redirect('/');
