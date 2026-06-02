@@ -183,6 +183,17 @@
                 width: 100%;
             }
         }
+
+        .error {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            font-size: 0.9rem;
+            text-align: left;
+            backdrop-filter: blur(6px);
+        }
     </style>
 </head>
 
@@ -250,6 +261,16 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if (isset($errors) && !empty($errors)) : ?>
+                    <div class="error-list">
+                        <?php foreach ($errors as $error) : ?>
+                            <div class="error">
+                                ⚠ <?= htmlspecialchars($error) ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
 
                 <div class="actions">
                     <a href="/dashboard/" class="btn btn-secondary">Cancel</a>

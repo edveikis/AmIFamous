@@ -2,8 +2,11 @@
 
 namespace Framework\Import;
 
+use Exception;
 use RuntimeException;
 use Framework\Session;
+
+use function PHPSTORM_META\expectedArguments;
 
 class ImportDispatcher
 {
@@ -22,10 +25,9 @@ class ImportDispatcher
             case 'csv':
                 $importer = new CSVImporter($this->db);
                 $importer->import($fullPath, $fields);
-                Session::setFlashMessage('success_message', 'Database imported successfully');
                 break;
             default:
-                Session::setFlashMessage('error_message', 'File type ' . $extension . ' not supported');
+                throw new Exception('Unsupported file format');
                 break;
         }
 

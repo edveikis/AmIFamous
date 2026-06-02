@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use Error;
+use Exception;
 use Framework\Database;
 use Framework\Import\ImportDispatcher;
+use Framework\Session;
 
 class DashboardController
 {
@@ -42,7 +44,9 @@ class DashboardController
         $fileName = isset($params['file']) ? $params['file'] : null;
 
         if (!$fileName) {
-            return ErrorController::notFound('Filename is missing');
+            Session::setFlashMessage('error_message', 'Filename missing');
+            redirect('/dashboard');
+            exit;
         }
 
         // Strip any directory components entirely
@@ -53,7 +57,9 @@ class DashboardController
         $allowedBase = realpath($importsPath);
 
         if (!$fullPath || !str_starts_with($fullPath, $allowedBase)) {
-            return ErrorController::notFound('File not found');
+            Session::setFlashMessage('error_message', 'Wrong file path: ' . $fullPath);
+            redirect('/dashboard');
+            exit;
         }
 
         loadView('dashboard/show', ['file_name' => $fileName]);
@@ -71,8 +77,24 @@ class DashboardController
         $username = isset($_POST['username_field']) ? $_POST['username_field'] : null;
         $breachName = isset($_POST['breach_name']) ? $_POST['breach_name'] : null;
 
+        $errors = [];
+
         if (!$fileName) {
-            return ErrorController::notFound('Filename is missing');
+            $errors['file'] = 'Filename was not set';
+        }
+
+        // email and breachName are required for the webapp to work
+        if (!$email) {
+            $errors['email'] = 'Email field is required';
+        }
+
+        if (!$breachName) {
+            $errors['name'] = 'Breach name is requied';
+        }
+
+        if (!empty($errors)) {
+            loadView('dashboard/show', ['file_name' => $fileName, 'errors' => $errors]);
+            exit;
         }
 
         // Strip any directory components entirely
@@ -83,36 +105,30 @@ class DashboardController
         $allowedBase = realpath($importsPath);
 
         if (!$fullPath || !str_starts_with($fullPath, $allowedBase)) {
-            return ErrorController::notFound('File not found');
-        }
-
-        // email and breachName are required for the webapp to work
-        if (!$email) {
-            echo 'Email field is required';
-            // redirect
+            Session::setFlashMessage('error_message', 'File not found: ' . $fullPath);
+            redirect('/dashboard');
             exit;
         }
 
-        if (!$breachName) {
-            echo 'Breach name is requied';
-            // redirect
-            exit;
-        }
-
-
-        // TODO: logic if there is no input in certain fields
         // TODO: batch insert for faster inserts
+        // TODO: uploader id
         $importer = new ImportDispatcher($this->db);
-        $importer->import(
-            $fullPath,
-            [
-                'email' => $email,
-                'password' => $password,
-                'username' => $username,
-                'name' => $breachName,
-                'file_name' => $fileName,
-            ]
-        );
+        try {
+
+            $importer->import(
+                $fullPath,
+                [
+                    'email' => $email,
+                    'password' => $password,
+                    'username' => $username,
+                    'name' => $breachName,
+                    'file_name' => $fileName,
+                ]
+            );
+            Session::setFlashMessage('success_message', 'Database imported successfully');
+        } catch (Exception $e) {
+            Session::setFlashMessage('error_message', 'File type not supported');
+        }
 
         redirect('/dashboard');
     }
