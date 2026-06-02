@@ -34,7 +34,7 @@ class BreachesController
             br.email,
             br.username,
             br.password,
-            br.raw_data_json
+            br.raw_data
         FROM breach_records br
         JOIN breaches b ON br.breach_id = b.id
         WHERE br.email = :email",

@@ -43,13 +43,13 @@ class CSVImporter
             $rawData = array_diff_key($line, $known);
 
             $this->db->query(
-                "INSERT INTO breach_records(breach_id, email, username, password, raw_data_json) VALUES(:breach_id, :email, :username, :password, :raw_data_json)",
+                "INSERT INTO breach_records(breach_id, email, username, password, raw_data) VALUES(:breach_id, :email, :username, :password, :raw_data)",
                 [
                     'breach_id' => $breachID,
                     'email' => $line[$fields['email']],
                     'username' => $line[$fields['username']],
                     'password' => $line[$fields['password']],
-                    'raw_data_json' => json_encode($rawData),
+                    'raw_data' => json_encode($rawData),
 
                 ]
             );
