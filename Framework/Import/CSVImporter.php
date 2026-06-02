@@ -39,7 +39,7 @@ class CSVImporter
         while (($line = fgetcsv($file)) !== FALSE) {
             $line = array_combine($header, $line);
 
-            $known = array_flip([$fields['email'], $fields['username'], $fields['password']]);
+            $known = array_flip([$fields['email'] ?? '', $fields['username'] ?? '', $fields['password'] ?? '']);
             $rawData = array_diff_key($line, $known);
 
             $this->db->query(
@@ -47,9 +47,9 @@ class CSVImporter
                 [
                     'breach_id' => $breachID,
                     'email' => $line[$fields['email']],
-                    'username' => $line[$fields['username']],
-                    'password' => $line[$fields['password']],
-                    'raw_data' => json_encode($rawData),
+                    'username' => $line[$fields['username']] ?? '',
+                    'password' => $line[$fields['password']] ?? '',
+                    'raw_data' => !empty($rawData) ? json_encode($rawData) : null,
 
                 ]
             );
