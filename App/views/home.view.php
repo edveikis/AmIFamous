@@ -157,6 +157,18 @@ use Framework\Session;
         button:hover {
             background: #2563eb;
         }
+
+        .error {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            font-size: 0.9rem;
+            text-align: left;
+            backdrop-filter: blur(6px);
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -169,6 +181,16 @@ use Framework\Session;
             <p>
                 Check if your email address is in a data breach
             </p>
+
+            <?php if (isset($errors) && !empty($errors)) : ?>
+                <div class="error-list">
+                    <?php foreach ($errors as $error) : ?>
+                        <div class="error">
+                            ⚠ <?= htmlspecialchars($error) ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
             <form method="POST" action="/breaches">
                 <input

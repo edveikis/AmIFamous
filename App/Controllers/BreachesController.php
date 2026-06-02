@@ -17,14 +17,18 @@ class BreachesController
     public function getBreaches()
     {
         $email = isset($_POST['email']) ? $_POST['email'] : null;
+        $errors = [];
 
         if (!$email || empty($email)) {
-            redirect('/');
+            $errors['email'] = 'Email address required';
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // TODO: error message
-            echo "Invalid email format";
+            $errors['format'] = 'Invalid email format';
+        }
+
+        if (!empty($errors)) {
+            loadView('home', ['errors' => $errors]);
             exit;
         }
 
