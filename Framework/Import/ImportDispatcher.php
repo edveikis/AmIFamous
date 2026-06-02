@@ -3,6 +3,7 @@
 namespace Framework\Import;
 
 use RuntimeException;
+use Framework\Session;
 
 class ImportDispatcher
 {
@@ -21,9 +22,10 @@ class ImportDispatcher
             case 'csv':
                 $importer = new CSVImporter($this->db);
                 $importer->import($fullPath, $fields);
+                Session::setFlashMessage('success_message', 'Database imported successfully');
                 break;
             default:
-                throw new RuntimeException("Unsupported file type: $extension");
+                Session::setFlashMessage('error_message', 'File type ' . $extension . ' not supported');
                 break;
         }
 

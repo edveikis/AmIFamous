@@ -321,6 +321,8 @@
 
 <body>
     <div class="dashboard">
+        <?php loadView('message'); ?>
+
         <div class="topbar">
             <div class="branding">
                 <h1>Admin Dashboard</h1>
