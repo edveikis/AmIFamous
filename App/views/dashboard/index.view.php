@@ -325,6 +325,10 @@
             <div class="branding">
                 <h1>Admin Dashboard</h1>
             </div>
+
+            <div class="topbar-actions">
+                <a href="/" class="btn btn-secondary">Go Back</a>
+            </div>
         </div>
 
         <div class="stats-grid">
