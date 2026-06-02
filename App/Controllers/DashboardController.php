@@ -127,7 +127,7 @@ class DashboardController
             );
             Session::setFlashMessage('success_message', 'Database imported successfully');
         } catch (Exception $e) {
-            Session::setFlashMessage('error_message', 'File type not supported');
+            Session::setFlashMessage('error_message', $e->getMessage());
         }
 
         redirect('/dashboard');

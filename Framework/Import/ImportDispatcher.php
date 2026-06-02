@@ -24,7 +24,11 @@ class ImportDispatcher
         switch ($extension) {
             case 'csv':
                 $importer = new CSVImporter($this->db);
-                $importer->import($fullPath, $fields);
+                try {
+                    $importer->import($fullPath, $fields);
+                } catch (Exception $e) {
+                    throw new Exception('Import failed: ' . $e->getMessage());
+                }
                 break;
             default:
                 throw new Exception('Unsupported file format');
