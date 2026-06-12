@@ -110,8 +110,6 @@ class DashboardController
             exit;
         }
 
-        // TODO: batch insert for faster inserts
-        // TODO: uploader id
         $importer = new ImportDispatcher($this->db);
         try {
 

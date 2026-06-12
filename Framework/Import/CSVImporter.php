@@ -29,8 +29,6 @@ class CSVImporter
         $this->db->conn->beginTransaction();
 
         try {
-
-
             $this->db->query(
                 'INSERT INTO breaches(name, file_name) VALUES(:name, :file_name)',
                 [
